@@ -13,6 +13,7 @@ class Program
         Test("triangle", "integral", true);
         Test("apple", "papel", true);
         Test("rat", "car", false);
+        Test("aabb", "baa", false);
         Test("aabb", "bbaa", true);
         Test("abcd", "abce", false);
     }
