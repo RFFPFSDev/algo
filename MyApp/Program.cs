@@ -14,6 +14,7 @@ class Program
         Test("apple", "papel", true);
         Test("rat", "car", false);
         Test("aabb", "baa", false);
+        Test("aaabbb", "bbaaaa", false);
         Test("aabb", "bbaa", true);
         Test("abcd", "abce", false);
     }
@@ -40,6 +41,8 @@ class Program
 
     static bool IsAnagram(string s1, string s2)
     {
+        if (s1.Length != s2.Length) return false;
+
         var lettersS1 = new Dictionary<char,int>();
         var lettersS2 = new Dictionary<char,int>();
 
