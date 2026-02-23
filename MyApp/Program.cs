@@ -1,6 +1,4 @@
-﻿using System;
-
-class Program
+﻿class Program
 {
     static void Main(string[] args)
     {
@@ -9,65 +7,35 @@ class Program
 
     static void RunTests()
     {
-        Test("listen", "silent", true);
-        Test("triangle", "integral", true);
-        Test("apple", "papel", true);
-        Test("rat", "car", false);
-        Test("aabb", "baa", false);
-        Test("aaabbb", "bbaaaa", false);
-        Test("bbaaaa", "aaabbb", false);
-        Test("aabb", "bbaa", true);
-        Test("abcd", "abce", false);
+        Test("leetcode", 0);
+        Test("loveleetcode", 2);
+        Test("aabb", -1);
+        Test("abcabcde", 6);
+        Test("", -1);
     }
 
-    static void Test(string s1, string s2, bool expected)
+    static void Test(string input, int expected)
     {
         try
         {
-            var result = IsAnagram(s1, s2);
+            var result = FirstUniqueChar(input);
             if (result == expected)
             {
-                Console.WriteLine($"✅: \"{s1}\" & \"{s2}\"");
+                Console.WriteLine($"✅: \"{input}\" -> {result}");
             }
             else
             {
-                Console.WriteLine($"❌: \"{s1}\" & \"{s2}\" | Expected: {expected}, Got: {result}");
+                Console.WriteLine($"❌: \"{input}\" | Expected: {expected}, Got: {result}");
             }
         }
         catch (NotImplementedException)
         {
-            Console.WriteLine("IsAnagram function is not implemented.");
+            Console.WriteLine("FirstUniqueChar function is not implemented.");
         }
     }
 
-    static bool IsAnagram(string s1, string s2)
+    static int FirstUniqueChar(string s)
     {
-        if (s1.Length != s2.Length) return false;
-
-        var letters = new Dictionary<char,int>();
-
-        foreach(char c in s1)
-        {
-            if (letters.ContainsKey(c))
-            {
-                letters[c]++;
-            }
-            else
-            {
-                letters.Add(c,1);
-            }
-        }
-
-        foreach(char c in s2)
-        {
-            if (!letters.ContainsKey(c) || letters[c] == 0)
-            {
-               return false; 
-            }
-
-            letters[c]--;
-        }
-
-        return true;
+        return 0;
     }
 }
