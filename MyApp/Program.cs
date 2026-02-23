@@ -15,6 +15,7 @@ class Program
         Test("rat", "car", false);
         Test("aabb", "baa", false);
         Test("aaabbb", "bbaaaa", false);
+        Test("bbaaaa", "aaabbb", false);
         Test("aabb", "bbaa", true);
         Test("abcd", "abce", false);
     }
@@ -43,39 +44,28 @@ class Program
     {
         if (s1.Length != s2.Length) return false;
 
-        var lettersS1 = new Dictionary<char,int>();
-        var lettersS2 = new Dictionary<char,int>();
+        var letters = new Dictionary<char,int>();
 
         foreach(char c in s1)
         {
-            if (lettersS1.ContainsKey(c))
+            if (letters.ContainsKey(c))
             {
-                lettersS1[c]++;
+                letters[c]++;
             }
             else
             {
-                lettersS1.Add(c,1);
+                letters.Add(c,1);
             }
         }
 
         foreach(char c in s2)
         {
-            if (lettersS2.ContainsKey(c))
+            if (!letters.ContainsKey(c) || letters[c] == 0)
             {
-                lettersS2[c]++;
+               return false; 
             }
-            else
-            {
-                lettersS2.Add(c,1);
-            }
-        }
 
-        foreach(char c in lettersS1.Keys)
-        {
-            if(!lettersS2.ContainsKey(c) || lettersS1[c] != lettersS2[c])
-            {
-                return false;
-            } 
+            letters[c]--;
         }
 
         return true;
