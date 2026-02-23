@@ -21,7 +21,7 @@ class Program
     {
         try
         {
-            bool result = IsAnagram(s1, s2);
+            var result = IsAnagram(s1, s2);
             if (result == expected)
             {
                 Console.WriteLine($"✅: \"{s1}\" & \"{s2}\"");
@@ -39,6 +39,41 @@ class Program
 
     static bool IsAnagram(string s1, string s2)
     {
-        return false;
+        var lettersS1 = new Dictionary<char,int>();
+        var lettersS2 = new Dictionary<char,int>();
+
+        foreach(char c in s1)
+        {
+            if (lettersS1.ContainsKey(c))
+            {
+                lettersS1[c]++;
+            }
+            else
+            {
+                lettersS1.Add(c,1);
+            }
+        }
+
+        foreach(char c in s2)
+        {
+            if (lettersS2.ContainsKey(c))
+            {
+                lettersS2[c]++;
+            }
+            else
+            {
+                lettersS2.Add(c,1);
+            }
+        }
+
+        foreach(char c in lettersS1.Keys)
+        {
+            if(!lettersS2.ContainsKey(c) || lettersS1[c] != lettersS2[c])
+            {
+                return false;
+            } 
+        }
+
+        return true;
     }
 }
