@@ -36,6 +36,19 @@
 
     static int FirstUniqueChar(string s)
     {
-        return 0;
+        var count = new Dictionary<char, int>();
+
+        foreach (char c in s)
+        {
+            count[c] = count.TryGetValue(c, out int v) ? v + 1 : 1;
+        }
+
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (count[s[i]] == 1)
+                return i;
+        }
+
+        return -1;
     }
 }
