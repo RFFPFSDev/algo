@@ -2,68 +2,83 @@
 {
     static void Main()
     {
-        // Create an array (fixed size)
-        var numbers = new int[5];
+        // Create a list of integers
+        List<int> numbers = new List<int>();
 
-        // Assign/Modify values by index
-        numbers[0] = 10;
-        numbers[1] = 5;
-        numbers[2] = 8;
-        // Arrays are automatically initialized with default values. numbers[3] is 0
-        numbers[4] = 15;
+        // Add items
+        numbers.Add(10);
+        numbers.Add(20);
+        numbers.Add(30);
+        numbers.Add(40);
 
-        Console.WriteLine("Initial array:");
-        PrintArray(numbers);
+        // Add a range of items
+        numbers.AddRange(new int[] { 50, 60 });
 
-        // Access value by index
+        Console.WriteLine("Initial list:");
+        PrintList(numbers);
+
+        // Access by index
         Console.WriteLine("\nElement at index 2: " + numbers[2]);
 
-        // Length
-        Console.WriteLine("Array length: " + numbers.Length);
+        // Update value
+        numbers[1] = 25;
+        Console.WriteLine("\nAfter updating index 1:");
+        PrintList(numbers);
+
+        // Insert value at a specific index
+        numbers.Insert(2, 15);
+        Console.WriteLine("\nAfter inserting 15 at index 2:");
+        PrintList(numbers);
+
+        // Remove by value
+        numbers.Remove(40);
+        Console.WriteLine("\nAfter removing 40:");
+        PrintList(numbers);
+
+        // Remove by index
+        numbers.RemoveAt(0);
+        Console.WriteLine("\nAfter removing at index 0:");
+        PrintList(numbers);
 
         // Check if value exists
-        bool contains20 = numbers.Contains(15);
-        Console.WriteLine("\nContains 15? " + contains20);
+        if (numbers.Contains(25))
+        {
+            Console.WriteLine("\n25 exists in the list");
+        }
 
-        // Find index of value
-        int index = Array.IndexOf(numbers, 15);
-        Console.WriteLine("Index of 15: " + index);
+        // Find index
+        int index = numbers.IndexOf(50);
+        Console.WriteLine("Index of 50: " + index);
 
-        // Sort array
-        Array.Sort(numbers);
+        // Count
+        Console.WriteLine("\nTotal items: " + numbers.Count);
+
+        // Sort list
+        numbers.Sort();
         Console.WriteLine("\nAfter sorting:");
-        PrintArray(numbers);
+        PrintList(numbers);
 
-        // Reverse array
-        Array.Reverse(numbers);
+        // Reverse list
+        numbers.Reverse();
         Console.WriteLine("\nAfter reversing:");
-        PrintArray(numbers);
+        PrintList(numbers);
 
-        // Max / Min (LINQ)
+        // LINQ examples
         int max = numbers.Max();
         int min = numbers.Min();
-        Console.WriteLine("\nMax value: " + max);
-        Console.WriteLine("Min value: " + min);
+        int sum = numbers.Sum();
+        Console.WriteLine($"\nMax: {max}, Min: {min}, Sum: {sum}");
 
-        // Resize array
-        Array.Resize(ref numbers, 7);
-        numbers[5] = 99;
-        numbers[6] = 100;
-
-        Console.WriteLine("\nAfter resizing:");
-        PrintArray(numbers);
-
-        // Clear array (sets values to default)
-        Array.Clear(numbers, 0, numbers.Length);
-        Console.WriteLine("\nAfter clearing:");
-        PrintArray(numbers);
+        // Clear list
+        numbers.Clear();
+        Console.WriteLine("\nAfter clearing list, count: " + numbers.Count);
     }
 
-    static void PrintArray(int[] array)
+    static void PrintList(List<int> list)
     {
-        foreach (int number in array)
+        foreach (int num in list)
         {
-            Console.Write(number + " ");
+            Console.Write(num + " ");
         }
         Console.WriteLine();
     }
