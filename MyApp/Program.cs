@@ -1,54 +1,81 @@
 ﻿class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        RunTests();
+        // Create a dictionary
+        Dictionary<string, int> students = new Dictionary<string, int>();
+
+        // Add items
+        students.Add("Alice", 85);
+        students.Add("Bob", 90);
+        students["Charlie"] = 78;   // Alternative way to add
+
+        Console.WriteLine("Initial students:");
+        PrintDictionary(students);
+
+        // Access values
+        Console.WriteLine("\nBob's grade: " + students["Bob"]);
+
+        // Check if key exists
+        if (students.ContainsKey("Alice"))
+        {
+            Console.WriteLine("Alice exists in dictionary.");
+        }
+
+        // Check if value exists
+        if (students.ContainsValue(90))
+        {
+            Console.WriteLine("A student has grade 90.");
+        }
+
+        // Update value
+        students["Alice"] = 95;
+
+        // TryGetValue (safe way)
+        if (students.TryGetValue("David", out int grade))
+        {
+            Console.WriteLine("David's grade: " + grade);
+        }
+        else
+        {
+            Console.WriteLine("David not found.");
+        }
+
+        // Remove item
+        students.Remove("Charlie");
+
+        // Count
+        Console.WriteLine("\nTotal students: " + students.Count);
+
+        //  Loop through Keys only
+        Console.WriteLine("\nStudent Names:");
+        foreach (string name in students.Keys)
+        {
+            Console.WriteLine(name);
+        }
+
+        // Loop through Values only
+        Console.WriteLine("\nStudent Grades:");
+        foreach (int value in students.Values)
+        {
+            Console.WriteLine(value);
+        }
+
+        // LINQ example (Highest grade)
+        int maxGrade = students.Values.Max();
+        Console.WriteLine("\nHighest Grade: " + maxGrade);
+
+        // Clear dictionary
+        students.Clear();
+        Console.WriteLine("\nDictionary cleared.");
+        Console.WriteLine("Count after clear: " + students.Count);
     }
 
-    static void RunTests()
+    static void PrintDictionary(Dictionary<string, int> dict)
     {
-        Test("leetcode", 0);
-        Test("loveleetcode", 2);
-        Test("aabb", -1);
-        Test("abcabcde", 6);
-        Test("", -1);
-    }
-
-    static void Test(string input, int expected)
-    {
-        try
+        foreach (var item in dict)
         {
-            var result = FirstUniqueChar(input);
-            if (result == expected)
-            {
-                Console.WriteLine($"✅: \"{input}\" -> {result}");
-            }
-            else
-            {
-                Console.WriteLine($"❌: \"{input}\" | Expected: {expected}, Got: {result}");
-            }
+            Console.WriteLine(item.Key + " : " + item.Value);
         }
-        catch (NotImplementedException)
-        {
-            Console.WriteLine("FirstUniqueChar function is not implemented.");
-        }
-    }
-
-    static int FirstUniqueChar(string s)
-    {
-        var count = new Dictionary<char, int>();
-
-        foreach (char c in s)
-        {
-            count[c] = count.TryGetValue(c, out int v) ? v + 1 : 1;
-        }
-
-        for (int i = 0; i < s.Length; i++)
-        {
-            if (count[s[i]] == 1)
-                return i;
-        }
-
-        return -1;
     }
 }
