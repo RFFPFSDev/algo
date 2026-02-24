@@ -1,68 +1,40 @@
 ﻿class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        // Create a HashSet of integers
-        HashSet<int> numbers = new HashSet<int>();
-
-        // Add items
-        numbers.Add(10);
-        numbers.Add(20);
-        numbers.Add(30);
-
-        // Adding a duplicate has no effect
-        bool added = numbers.Add(20); // false
-        Console.WriteLine($"Trying to add 20 again: {added}");
-
-        Console.WriteLine("\nInitial HashSet:");
-        PrintHashSet(numbers);
-
-        // Check if a value exists
-        if (numbers.Contains(30))
-        {
-            Console.WriteLine("\n30 exists in the HashSet");
-        }
-
-        // Remove an item
-        numbers.Remove(10);
-        Console.WriteLine("\nAfter removing 10:");
-        PrintHashSet(numbers);
-
-        // Count
-        Console.WriteLine("\nTotal items: " + numbers.Count);
-
-        // Union, Intersection, Difference with another HashSet
-        HashSet<int> otherNumbers = new HashSet<int>() { 20, 40, 50 };
-
-        // Union
-        HashSet<int> union = new HashSet<int>(numbers);
-        union.UnionWith(otherNumbers);
-        Console.WriteLine("\nUnion of numbers and otherNumbers:");
-        PrintHashSet(union);
-
-        // Intersection
-        HashSet<int> intersection = new HashSet<int>(numbers);
-        intersection.IntersectWith(otherNumbers);
-        Console.WriteLine("\nIntersection of numbers and otherNumbers:");
-        PrintHashSet(intersection);
-
-        // Difference (numbers - otherNumbers)
-        HashSet<int> difference = new HashSet<int>(numbers);
-        difference.ExceptWith(otherNumbers);
-        Console.WriteLine("\nDifference of numbers and otherNumbers:");
-        PrintHashSet(difference);
-
-        // Clear HashSet
-        numbers.Clear();
-        Console.WriteLine("\nAfter clearing HashSet, count: " + numbers.Count);
+        RunTests();
     }
 
-    static void PrintHashSet(HashSet<int> set)
+    static void RunTests()
     {
-        foreach (int num in set)
+        Test(new int[] { 2, 1, 5, 1, 3, 2 }, 3, 9);       // subarray [5,1,3]
+        Test(new int[] { 1, 2, 3, 4, 5 }, 2, 9);          // subarray [4,5]
+        Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
+        Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
+        Test(new int[] { 1, 2 }, 3, -1);                  // k > array length, invalid
+    }
+
+    static void Test(int[] arr, int k, int expected)
+    {
+        try
         {
-            Console.Write(num + " ");
+            var result = MaxSumSubarray(arr, k);
+            if (result == expected)
+            {
+                Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
+            }
+            else
+            {
+                Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
+            }
         }
-        Console.WriteLine();
+        catch (NotImplementedException)
+        {
+            Console.WriteLine("MaxSumSubarray function is not implemented.");
+        }
+    }
+
+    static int MaxSumSubarray(int[] arr, int k)
+    {
     }
 }
