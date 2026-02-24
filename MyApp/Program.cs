@@ -2,81 +2,64 @@
 {
     static void Main()
     {
-        // Create a list of integers
-        List<int> numbers = new List<int>();
+        // Create a HashSet of integers
+        HashSet<int> numbers = new HashSet<int>();
 
         // Add items
         numbers.Add(10);
         numbers.Add(20);
         numbers.Add(30);
-        numbers.Add(40);
 
-        // Add a range of items
-        numbers.AddRange(new int[] { 50, 60 });
+        // Adding a duplicate has no effect
+        bool added = numbers.Add(20); // false
+        Console.WriteLine($"Trying to add 20 again: {added}");
 
-        Console.WriteLine("Initial list:");
-        PrintList(numbers);
+        Console.WriteLine("\nInitial HashSet:");
+        PrintHashSet(numbers);
 
-        // Access by index
-        Console.WriteLine("\nElement at index 2: " + numbers[2]);
-
-        // Update value
-        numbers[1] = 25;
-        Console.WriteLine("\nAfter updating index 1:");
-        PrintList(numbers);
-
-        // Insert value at a specific index
-        numbers.Insert(2, 15);
-        Console.WriteLine("\nAfter inserting 15 at index 2:");
-        PrintList(numbers);
-
-        // Remove by value
-        numbers.Remove(40);
-        Console.WriteLine("\nAfter removing 40:");
-        PrintList(numbers);
-
-        // Remove by index
-        numbers.RemoveAt(0);
-        Console.WriteLine("\nAfter removing at index 0:");
-        PrintList(numbers);
-
-        // Check if value exists
-        if (numbers.Contains(25))
+        // Check if a value exists
+        if (numbers.Contains(30))
         {
-            Console.WriteLine("\n25 exists in the list");
+            Console.WriteLine("\n30 exists in the HashSet");
         }
 
-        // Find index
-        int index = numbers.IndexOf(50);
-        Console.WriteLine("Index of 50: " + index);
+        // Remove an item
+        numbers.Remove(10);
+        Console.WriteLine("\nAfter removing 10:");
+        PrintHashSet(numbers);
 
         // Count
         Console.WriteLine("\nTotal items: " + numbers.Count);
 
-        // Sort list
-        numbers.Sort();
-        Console.WriteLine("\nAfter sorting:");
-        PrintList(numbers);
+        // Union, Intersection, Difference with another HashSet
+        HashSet<int> otherNumbers = new HashSet<int>() { 20, 40, 50 };
 
-        // Reverse list
-        numbers.Reverse();
-        Console.WriteLine("\nAfter reversing:");
-        PrintList(numbers);
+        // Union
+        HashSet<int> union = new HashSet<int>(numbers);
+        union.UnionWith(otherNumbers);
+        Console.WriteLine("\nUnion of numbers and otherNumbers:");
+        PrintHashSet(union);
 
-        // LINQ examples
-        int max = numbers.Max();
-        int min = numbers.Min();
-        int sum = numbers.Sum();
-        Console.WriteLine($"\nMax: {max}, Min: {min}, Sum: {sum}");
+        // Intersection
+        HashSet<int> intersection = new HashSet<int>(numbers);
+        intersection.IntersectWith(otherNumbers);
+        Console.WriteLine("\nIntersection of numbers and otherNumbers:");
+        PrintHashSet(intersection);
 
-        // Clear list
+        // Difference (numbers - otherNumbers)
+        HashSet<int> difference = new HashSet<int>(numbers);
+        difference.ExceptWith(otherNumbers);
+        Console.WriteLine("\nDifference of numbers and otherNumbers:");
+        PrintHashSet(difference);
+
+        // Clear HashSet
         numbers.Clear();
-        Console.WriteLine("\nAfter clearing list, count: " + numbers.Count);
+        Console.WriteLine("\nAfter clearing HashSet, count: " + numbers.Count);
     }
 
-    static void PrintList(List<int> list)
+    static void PrintHashSet(HashSet<int> set)
     {
-        foreach (int num in list)
+        foreach (int num in set)
         {
             Console.Write(num + " ");
         }
