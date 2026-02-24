@@ -391,21 +391,14 @@ class Program
 
     static void Test(string s1, string s2, bool expected)
     {
-        try
+        var result = IsAnagram(s1, s2);
+        if (result == expected)
         {
-            var result = IsAnagram(s1, s2);
-            if (result == expected)
-            {
-                Console.WriteLine($"✅: \"{s1}\" & \"{s2}\"");
-            }
-            else
-            {
-                Console.WriteLine($"❌: \"{s1}\" & \"{s2}\" | Expected: {expected}, Got: {result}");
-            }
+            Console.WriteLine($"✅: \"{s1}\" & \"{s2}\"");
         }
-        catch (NotImplementedException)
+        else
         {
-            Console.WriteLine("IsAnagram function is not implemented.");
+            Console.WriteLine($"❌: \"{s1}\" & \"{s2}\" | Expected: {expected}, Got: {result}");
         }
     }
 
@@ -463,21 +456,14 @@ class Program
 
     static void Test(string input, int expected)
     {
-        try
+        var result = FirstUniqueChar(input);
+        if (result == expected)
         {
-            var result = FirstUniqueChar(input);
-            if (result == expected)
-            {
-                Console.WriteLine($"✅: \"{input}\" -> {result}");
-            }
-            else
-            {
-                Console.WriteLine($"❌: \"{input}\" | Expected: {expected}, Got: {result}");
-            }
+            Console.WriteLine($"✅: \"{input}\" -> {result}");
         }
-        catch (NotImplementedException)
+        else
         {
-            Console.WriteLine("FirstUniqueChar function is not implemented.");
+            Console.WriteLine($"❌: \"{input}\" | Expected: {expected}, Got: {result}");
         }
     }
 
@@ -515,50 +501,54 @@ class Program
 
     static void RunTests()
     {
+        Test(new int[] { 2, 1, 2, 1, 3, 1, 2, 1 }, 3, 6); // subarray [3,1,2]
         Test(new int[] { 2, 1, 5, 1, 3, 2 }, 3, 9);       // subarray [5,1,3]
         Test(new int[] { 1, 2, 3, 4, 5 }, 2, 9);          // subarray [4,5]
         Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
+        Test(new int[] { -4, -3, -2, -1 }, 3, -6);        // subarray [-3,-2,-1]
         Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
         Test(new int[] { 1, 2 }, 3, -1);                  // k > array length, invalid
     }
 
     static void Test(int[] arr, int k, int expected)
     {
-        try
+        var result = MaxSumSubarray(arr, k);
+        if (result == expected)
         {
-            var result = MaxSumSubarray(arr, k);
-            if (result == expected)
-            {
-                Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
-            }
-            else
-            {
-                Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
-            }
+            Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
         }
-        catch (NotImplementedException)
+        else
         {
-            Console.WriteLine("MaxSumSubarray function is not implemented.");
+            Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
         }
     }
 
     static int MaxSumSubarray(int[] arr, int k)
     {
-        if (arr.Length < k || k <= 0)
-            return -1;
-
-        int windowSum = 0;
-        for (int i = 0; i < k; i++)
+        if (k > arr.Length)
         {
-            windowSum += arr[i];
+            return -1;
         }
 
-        int maxSum = windowSum;
-
-        for (int i = k; i < arr.Length; i++)
+        if (k == 1)
         {
-            windowSum += arr[i] - arr[i - k];
-            maxSum = Math.Max(maxSum, windowSum);
+           return arr.Max();
+        }
+
+        int sum = 0;
+        for (int i=0; i < k; i++)
+        {
+            sum+=arr[i];
+        }
+        int maxSum = sum;
+
+        for (int a = 0; a < arr.Length - k; a++)
+        {
+            sum+=arr[a + k]-arr[a];
+            if (sum > maxSum)
+            {
+                maxSum = sum;
+            }
         }
 
         return maxSum;
