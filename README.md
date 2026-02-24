@@ -1,6 +1,50 @@
 ## Prerequisites:
 
+### string
+
+* string is immutable — once created, it cannot be changed.
+* Every “change” creates a NEW string.
+
+```cs
+string name = "John";
+name[0] = 'B';   // ❌ Error
+char firstLetter = name[0];
+name = "Bob"; // Creating a new string "Bob". Making name reference the new object (string "Bob"). The old "John" may later be garbage collected
+```
+
+* Use StringBuilder, if you need to modify text frequently
+
+```cs
+using System.Text;
+
+StringBuilder sb = new StringBuilder("Hello");
+sb[0] = 'B';        // ✅ Allowed
+sb.Append(" World");
+
+string result = sb.ToString();
+```
+
+### Array (T[])
+
+* Fixed-size collection
+
+### List<T>
+
+* Ordered, index-based dynamic array
+* Allows duplicates
+* Fast access by index
+
+### HashSet<T>
+
+* Stores unique elements
+* No guaranteed order
+* Very fast lookup
+
 ### Dictionary
+
+* Key–value pairs
+* Fast lookups by key
+* Keys must be unique
 
 ```cs
 class Program
