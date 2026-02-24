@@ -555,3 +555,64 @@ class Program
     }
 }
 ```
+
+#### Longest substring that contains only distinct characters
+
+```cs
+class Program
+{
+    static void Main(string[] args)
+    {
+        RunTests();
+    }
+
+    static void RunTests()
+    {
+        Test("abcabcbb", "abc");
+        Test("bbbbb", "b");
+        Test("pwwkew", "wke");
+        Test("", "");
+        Test("abcdef", "abcdef");
+    }
+
+    static void Test(string input, string expected)
+    {
+        var result = LongestDistinctSubstring(input);
+        if (result == expected)
+        {
+            Console.WriteLine($"✅: \"{input}\" -> \"{result}\"");
+        }
+        else
+        {
+            Console.WriteLine($"❌: \"{input}\" | Expected: \"{expected}\", Got: \"{result}\"");
+        }
+    }
+
+    static string LongestDistinctSubstring(string s)
+    {
+        var set = new HashSet<char>();
+        int left = 0;
+        int maxLength = 0;
+        int startIndex = 0;
+
+        for (int right = 0; right < s.Length; right++)
+        {
+            while (set.Contains(s[right]))
+            {
+                set.Remove(s[left]);
+                left++;
+            }
+
+            set.Add(s[right]);
+
+            if (right - left + 1 > maxLength)
+            {
+                maxLength = right - left + 1;
+                startIndex = left;
+            }
+        }
+
+        return s.Substring(startIndex, maxLength);
+    }
+}
+```

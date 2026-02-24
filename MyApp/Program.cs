@@ -7,56 +7,27 @@
 
     static void RunTests()
     {
-        Test(new int[] { 2, 1, 2, 1, 3, 1, 2, 1 }, 3, 6); // subarray [3,1,2]
-        Test(new int[] { 2, 1, 5, 1, 3, 2 }, 3, 9);       // subarray [5,1,3]
-        Test(new int[] { 1, 2, 3, 4, 5 }, 2, 9);          // subarray [4,5]
-        Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
-        Test(new int[] { -4, -3, -2, -1 }, 3, -6);        // subarray [-3,-2,-1]
-        Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
-        Test(new int[] { 1, 2 }, 3, -1);                  // k > array length, invalid
+        Test("abcabcbb", "abc");
+        Test("bbbbb", "b");
+        Test("pwwkew", "wke");
+        Test("", "");
+        Test("abcdef", "abcdef");
     }
 
-    static void Test(int[] arr, int k, int expected)
+    static void Test(string input, string expected)
     {
-        var result = MaxSumSubarray(arr, k);
+        var result = LongestDistinctSubstring(input);
         if (result == expected)
         {
-            Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
+            Console.WriteLine($"✅: \"{input}\" -> \"{result}\"");
         }
         else
         {
-            Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
+            Console.WriteLine($"❌: \"{input}\" | Expected: \"{expected}\", Got: \"{result}\"");
         }
     }
 
-    static int MaxSumSubarray(int[] arr, int k)
+    static string LongestDistinctSubstring(string s)
     {
-        if (k > arr.Length || k <= 0)
-        {
-            return -1;
-        }
-
-        if (k == 1)
-        {
-           return arr.Max();
-        }
-
-        int sum = 0;
-        for (int i=0; i < k; i++)
-        {
-            sum+=arr[i];
-        }
-        int maxSum = sum;
-
-        for (int a = 0; a < arr.Length - k; a++)
-        {
-            sum+=arr[a + k]-arr[a];
-            if (sum > maxSum)
-            {
-                maxSum = sum;
-            }
-        }
-
-        return maxSum;
     }
 }
