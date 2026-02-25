@@ -702,7 +702,7 @@ class Program
 
 ### Dynamic Programming
 
-#### Longest Palindromic Substring
+#### Fibonacci
 
 ```cs
 class Program
