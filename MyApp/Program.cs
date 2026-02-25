@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 
 class Program
 {
@@ -9,53 +10,31 @@ class Program
 
     static void RunTests()
     {
-        Test("abbaca", "ca");
-        Test("azxxzy", "ay");
-        Test("aabbcc", "");
-        Test("abc", "abc");
-        Test("aaaa", "");
-        Test("abba", "");
-        Test("aabccbadd", "a");
-        Test("", "");
-        Test("a", "a");
-        Test("aaabccddd", "abd");
+        Test(0, 0);
+        Test(1, 1);
+        Test(2, 1);
+        Test(3, 2);
+        Test(5, 5);
+        Test(10, 55);
+        Test(15, 610);
+        Test(20, 6765);
     }
 
-    static void Test(string input, string expected)
+    static void Test(int n, int expected)
     {
-        var result = RemoveAdjacentDuplicates(input);
+        var result = Fibonacci(n);
 
         if (result == expected)
         {
-            Console.WriteLine($"✅: \"{input}\" -> \"{result}\"");
+            Console.WriteLine($"✅: Fibonacci({n}) -> {result}");
         }
         else
         {
-            Console.WriteLine($"❌: \"{input}\" | Expected: \"{expected}\", Got: \"{result}\"");
+            Console.WriteLine($"❌: Fibonacci({n}) | Expected: {expected}, Got: {result}");
         }
     }
 
-    static string RemoveAdjacentDuplicates(string s)
+    static int Fibonacci(int n)
     {
-        int len = s.Length;
-        if (len <= 1)
-        {
-            return s;
-        }
-
-        var result = new StringBuilder();
-
-        for (int i=0; i < len; i++)
-        {
-            if (result.Length > 0 && s[i] == result[result.Length-1])
-            {
-                result.Remove(result.Length-1,1);
-                continue;
-            }
-
-            result.Append(s[i]);
-        }
-
-        return result.ToString();
     }
 }
