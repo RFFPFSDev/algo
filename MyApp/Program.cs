@@ -14,7 +14,12 @@ class Program
         Test(1, 1);
         Test(2, 1);
         Test(3, 2);
+        Test(4, 3);
         Test(5, 5);
+        Test(6, 8);
+        Test(7, 13);
+        Test(8, 21);
+        Test(9, 34);
         Test(10, 55);
         Test(15, 610);
         Test(20, 6765);
@@ -34,7 +39,14 @@ class Program
         }
     }
 
+    // 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ..
     static int Fibonacci(int n)
     {
+        if (n <= 1)
+        {
+            return n;
+        }
+
+        return Fibonacci(n - 1) + Fibonacci(n - 2);
     }
 }
