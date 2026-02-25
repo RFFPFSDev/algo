@@ -688,7 +688,6 @@ class Program
         {
             if (result.Length > 0 && s[i] == result[result.Length-1])
             {
-                Console.Write($"{result}-");
                 result.Remove(result.Length-1,1);
                 continue;
             }
