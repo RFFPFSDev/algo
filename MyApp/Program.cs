@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text;
-
-class Program
+﻿class Program
 {
     static void Main(string[] args)
     {
@@ -39,7 +36,6 @@ class Program
         }
     }
 
-    // 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, ..
     static int Fibonacci(int n)
     {
         if (n <= 1)
@@ -47,6 +43,17 @@ class Program
             return n;
         }
 
-        return Fibonacci(n - 1) + Fibonacci(n - 2);
+        var previousResult = new int[2];
+        previousResult[0] = 0;
+        previousResult[1] = 1;
+
+        for (int i=2; i <= n; i++)
+        {
+            int temp = previousResult[1] + previousResult[0];
+            previousResult[0] = previousResult[1];
+            previousResult[1] = temp;
+        }
+
+        return previousResult[1];
     }
 }
