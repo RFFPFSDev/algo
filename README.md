@@ -559,6 +559,8 @@ class Program
 #### Longest substring that contains only distinct characters
 
 ```cs
+using System.Text;
+
 class Program
 {
     static void Main(string[] args)
@@ -570,9 +572,14 @@ class Program
     {
         Test("abcabcbb", "abc");
         Test("bbbbb", "b");
+        Test("aa", "a");
+        Test("ab", "ab");
+        Test("c", "c");
         Test("pwwkew", "wke");
+        Test("wpwkew", "pwke");
         Test("", "");
         Test("abcdef", "abcdef");
+        Test("abccefg", "cefg");
     }
 
     static void Test(string input, string expected)
@@ -590,26 +597,34 @@ class Program
 
     static string LongestDistinctSubstring(string s)
     {
-        var set = new HashSet<char>();
-        int left = 0;
-        int maxLength = 0;
-        int startIndex = 0;
-
-        for (int right = 0; right < s.Length; right++)
+        int len = s.Length;
+        if (len <= 1)
         {
-            while (set.Contains(s[right]))
+            return s;
+        }
+
+        int l = 0;
+        int startIndex = l;
+        int maxLength = 1;
+        var unique = new HashSet<char>();
+        unique.Add(s[l]);
+        int r = 1;
+
+        while (r < len)
+        {
+            if (unique.Add(s[r]))
             {
-                set.Remove(s[left]);
-                left++;
+                if (maxLength < r - l + 1)
+                {
+                    maxLength = r - l + 1;
+                    startIndex = l;
+                }
+                r++;
+                continue;
             }
 
-            set.Add(s[right]);
-
-            if (right - left + 1 > maxLength)
-            {
-                maxLength = right - left + 1;
-                startIndex = left;
-            }
+            unique.Remove(s[l]);
+            l++;
         }
 
         return s.Substring(startIndex, maxLength);
