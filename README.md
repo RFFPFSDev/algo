@@ -654,7 +654,7 @@ class Program
         Test("abc", "abc");
         Test("aaaa", "");
         Test("abba", "");
-        Test("aabccbadd", "d");
+        Test("aabccbadd", "a");
         Test("", "");
         Test("a", "a");
         Test("aaabccddd", "abd");
@@ -676,28 +676,24 @@ class Program
 
     static string RemoveAdjacentDuplicates(string s)
     {
-        if (string.IsNullOrEmpty(s))
-            return s;
-
-        var stack = new Stack<char>();
-
-        foreach (char c in s)
+        int len = s.Length;
+        if (len <= 1)
         {
-            if (stack.Count > 0 && stack.Peek() == c)
-            {
-                stack.Pop();
-            }
-            else
-            {
-                stack.Push(c);
-            }
+            return s;
         }
 
         var result = new StringBuilder();
 
-        while (stack.Count > 0)
+        for (int i=0; i < len; i++)
         {
-            result.Insert(0, stack.Pop());
+            if (result.Length > 0 && s[i] == result[result.Length-1])
+            {
+                Console.Write($"{result}-");
+                result.Remove(result.Length-1,1);
+                continue;
+            }
+
+            result.Append(s[i]);
         }
 
         return result.ToString();
