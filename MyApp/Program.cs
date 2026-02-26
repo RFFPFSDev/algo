@@ -1,4 +1,6 @@
-﻿class Program
+﻿using System;
+
+class Program
 {
     static void Main(string[] args)
     {
@@ -9,51 +11,45 @@
     {
         Test(0, 0);
         Test(1, 1);
-        Test(2, 1);
-        Test(3, 2);
-        Test(4, 3);
-        Test(5, 5);
-        Test(6, 8);
-        Test(7, 13);
-        Test(8, 21);
-        Test(9, 34);
+        Test(2, 3);
+        Test(3, 6);
+        Test(4, 10);
+        Test(5, 15);
+        Test(6, 21);
+        Test(7, 28);
+        Test(8, 36);
+        Test(9, 45);
         Test(10, 55);
-        Test(15, 610);
-        Test(20, 6765);
+        Test(15, 120);
+        Test(20, 210);
     }
 
     static void Test(int n, int expected)
     {
-        var result = Fibonacci(n);
+        var result = PrefixSum(n);
 
         if (result == expected)
         {
-            Console.WriteLine($"✅: Fibonacci({n}) -> {result}");
+            Console.WriteLine($"✅: PrefixSum({n}) -> {result}");
         }
         else
         {
-            Console.WriteLine($"❌: Fibonacci({n}) | Expected: {expected}, Got: {result}");
+            Console.WriteLine($"❌: PrefixSum({n}) | Expected: {expected}, Got: {result}");
         }
     }
 
-    static int Fibonacci(int n)
+    // 0+1+2+...+n
+    // 1 2 3 4 5 6 7 8 9
+    static int PrefixSum(int n)
     {
         if (n <= 1)
         {
             return n;
         }
 
-        var previousResult = new int[2];
-        previousResult[0] = 0;
-        previousResult[1] = 1;
-
-        for (int i=2; i <= n; i++)
-        {
-            int temp = previousResult[1] + previousResult[0];
-            previousResult[0] = previousResult[1];
-            previousResult[1] = temp;
-        }
-
-        return previousResult[1];
+        var middlevalue = n % 2 == 1 ? (n+1)/2 : n/2;
+        return n % 2 == 1 ?
+            middlevalue + (n+1)*(middlevalue - 1) :
+            (n+1)*middlevalue;
     }
 }
