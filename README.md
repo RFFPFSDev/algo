@@ -955,8 +955,6 @@ class Program
 #### Container with Most Water
 
 ```cs
-using System;
-
 class Program
 {
     static void Main(string[] args)
@@ -992,26 +990,26 @@ class Program
 
     static int MaxWaterContainer(int[] height)
     {
-        int left = 0;
-        int right = height.Length - 1;
-        int maxArea = 0;
+        int len = height.Length;
+        int l = 0;
+        int r = len - 1;
+        int max = 0;
 
-        while (left < right)
+        while(l < r)
         {
-            int width = right - left;
-            int h = Math.Min(height[left], height[right]);
-            int area = width * h;
-            if (area > maxArea)
-                maxArea = area;
+            max = Math.Max(max, (r-l)*Math.Min(height[l],height[r]));
 
-            // Move the smaller height pointer inward
-            if (height[left] < height[right])
-                left++;
+            if (height[l] > height[r])
+            {
+                r--;
+            }
             else
-                right--;
+            {
+                l++;
+            }
         }
 
-        return maxArea;
+        return max;
     }
 }
 ```
