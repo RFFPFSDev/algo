@@ -1,5 +1,11 @@
 ## Prerequisites:
 
+### Math
+
+```cs
+
+```
+
 ### string
 
 * string is immutable — once created, it cannot be changed.
@@ -840,15 +846,13 @@ class Program
 
     static void RunTests()
     {
-        Test(
-            new int[] { 10, 20, 10, 5, 15 },
-            new int[] { 10, 30, 40, 45, 60 }
-        );
-
-        Test(
-            new int[] { 30, 10, 10, 5, 50 },
-            new int[] { 30, 40, 50, 55, 105 }
-        );
+        Test(new int[] { 10, 20, 10, 5, 15 }, new int[] { 10, 30, 40, 45, 60 });
+        Test(new int[] { 30, 10, 10, 5, 50 }, new int[] { 30, 40, 50, 55, 105 });
+        Test(new int[] { }, new int[] { });
+        Test(new int[] { 42 }, new int[] { 42 });
+        Test(new int[] { 0, 0, 0, 0 }, new int[] { 0, 0, 0, 0 });
+        Test(new int[] { -1, -2, -3, -4 }, new int[] { -1, -3, -6, -10 });
+        Test(new int[] { 1000, -500, 200, -100 }, new int[] { 1000, 500, 700, 600 });
     }
 
     static void Test(int[] input, int[] expected)
@@ -881,30 +885,83 @@ class Program
         return true;
     }
 
-    // Prefix Sum Array Implementation
     static int[] PrefixSum(int[] arr)
     {
-        if (arr == null || arr.Length == 0)
-            return Array.Empty<int>();
-
-        int[] prefixSum = new int[arr.Length];
-        prefixSum[0] = arr[0];
-
-        for (int i = 1; i < arr.Length; i++)
+        int len = arr.Length;
+        for (int i = 1; i < len; i++)
         {
-            prefixSum[i] = prefixSum[i - 1] + arr[i];
+            arr[i] = arr[i-1] + arr[i];
         }
 
-        return prefixSum;
+        return arr;
     }
 }
 ```
 
 ### Two Pointers
 
-#### 
+#### Container with Most Water
 
 ```cs
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        RunTests();
+    }
+
+    static void RunTests()
+    {
+        Test(new int[] { 1, 5, 4, 3 }, 6);
+        Test(new int[] { 3, 1, 2, 4, 5 }, 12);
+        Test(new int[] { 2, 1, 8, 6, 4, 6, 5, 5 }, 25);
+        Test(new int[] { 1, 1 }, 1);
+        Test(new int[] { 1, 2, 1 }, 2);
+        Test(new int[] { 4, 3, 2, 1, 4 }, 16);
+    }
+
+    static void Test(int[] input, int expected)
+    {
+        var result = MaxWaterContainer(input);
+
+        if (result == expected)
+        {
+            Console.WriteLine($"✅: MaxWaterContainer([{string.Join(",", input)}]) -> {result}");
+        }
+        else
+        {
+            Console.WriteLine($"❌: Test Failed");
+            Console.WriteLine($"   Expected: {expected}");
+            Console.WriteLine($"   Got     : {result}");
+        }
+    }
+
+    static int MaxWaterContainer(int[] height)
+    {
+        int left = 0;
+        int right = height.Length - 1;
+        int maxArea = 0;
+
+        while (left < right)
+        {
+            int width = right - left;
+            int h = Math.Min(height[left], height[right]);
+            int area = width * h;
+            if (area > maxArea)
+                maxArea = area;
+
+            // Move the smaller height pointer inward
+            if (height[left] < height[right])
+                left++;
+            else
+                right--;
+        }
+
+        return maxArea;
+    }
+}
 ```
 
 ### Sorting
