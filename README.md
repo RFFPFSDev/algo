@@ -2,26 +2,6 @@
 
 ### Math
 
-* 17 % 5 = 2
-* 8 is even? True
-* 9 is odd? True
-* 5.0 / 2.0 = 2.5
-* After casting to int: 2
-* 5 / 2 = 2
-* After casting to int: 2
-* 5 / 2 = 2.5
-* After casting to int: 2.5
-* X,Y=10,25
-* Min: 10
-* Max: 25
-* Floor(4.1) = 4
-* Floor(4.9) = 4
-* Ceiling(4.1) = 5
-* Ceiling(4.9) = 5
-* Round(4.3) = 4
-* Round(4.5) = 4
-* Round(4.6) = 5
-
 ```cs
 class Program
 {
@@ -35,13 +15,9 @@ class Program
         Console.WriteLine($"5.0 / 2.0 = {division}");
         Console.WriteLine($"After casting to int: {truncated}");
         double division2 = 5 / 2;
-        int truncated2 = (int)division2;
         Console.WriteLine($"5 / 2 = {division2}");
-        Console.WriteLine($"After casting to int: {truncated2}");
         double division3 = ((double)5) / 2;
-        int truncated3 = (int)division3;
         Console.WriteLine($"((double)5) / 2 = {division3}");
-        Console.WriteLine($"After casting to int: {division3}");
         int x = 10;
         int y = 25;
         Console.WriteLine($"X,Y={x},{y}");
@@ -56,6 +32,26 @@ class Program
         Console.WriteLine($"Round(4.6) = {Math.Round(4.6)}");
     }
 }
+```
+
+```
+17 % 5 = 2
+8 is even? True
+9 is odd? True
+5.0 / 2.0 = 2.5
+After casting to int: 2
+5 / 2 = 2
+((double)5) / 2 = 2.5
+X,Y=10,25
+Min: 10
+Max: 25
+Floor(4.1) = 4
+Floor(4.9) = 4
+Ceiling(4.1) = 5
+Ceiling(4.9) = 5
+Round(4.3) = 4
+Round(4.5) = 4
+Round(4.6) = 5
 ```
 
 ### string
@@ -1027,3 +1023,7 @@ class Program
 
 ```cs
 ```
+
+## References:
+
+https://www.geeksforgeeks.org/dsa/top-100-data-structure-and-algorithms-dsa-interview-questions-topic-wise/
