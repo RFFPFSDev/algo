@@ -420,7 +420,7 @@ class Program
 
 ### Frequency Count
 
-#### IsAnagram
+IsAnagram
 
 ```cs
 class Program
@@ -489,7 +489,7 @@ class Program
 }
 ```
 
-#### First Non-Repeating Character
+First Non-Repeating Character
 
 ```cs
 class Program
@@ -543,7 +543,7 @@ class Program
 
 ### Sliding window
 
-#### Find maximum sum of subarray of size k
+Find maximum sum of subarray of size k
 
 ```cs
 class Program
@@ -610,7 +610,7 @@ class Program
 }
 ```
 
-#### Longest substring that contains only distinct characters
+Longest substring that contains only distinct characters
 
 ```cs
 using System.Text;
@@ -688,7 +688,7 @@ class Program
 
 ### Stack
 
-#### Repeatedly remove adjacent duplicate characters until no duplicates remain
+Repeatedly remove adjacent duplicate characters until no duplicates remain
 
 ```cs
 using System.Text;
@@ -756,7 +756,7 @@ class Program
 
 ### Dynamic Programming
 
-#### Fibonacci
+Fibonacci
 
 ```cs
 class Program
@@ -822,7 +822,7 @@ class Program
 
 ### Math
 
-#### Sum from 1 to n
+Sum from 1 to n
 
 ```cs
 class Program
@@ -882,7 +882,7 @@ class Program
 
 ### Prefix Sum
 
-#### Prefix Sum Array
+Prefix Sum Array
 
 ```cs
 class Program
@@ -948,7 +948,7 @@ class Program
 
 ### Two Pointers
 
-#### Container with Most Water
+Container with Most Water
 
 ```cs
 class Program
@@ -1012,14 +1012,14 @@ class Program
 
 ### Sorting
 
-#### 
+
 
 ```cs
 ```
 
 ### Binary Search
 
-#### 
+
 
 ```cs
 ```
