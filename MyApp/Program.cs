@@ -1,71 +1,51 @@
 ﻿class Program
 {
-    static void Main(string[] args)
+    static void Main()
     {
-        RunTests();
-    }
-
-    static void RunTests()
-    {
-        Test(new int[] { 5, 2, 9, 1, 5, 6 });
-        Test(new int[] { 3, 7, 8, 5, 2, 1, 9, 5, 4 });
-        Test(new int[] { 1 });
-        Test(new int[] { });
-        Test(new int[] { 10, -1, 2, -10, 5, 0 });
-        Test(new int[] { 4, 4, 4, 4 });
-        Test(new int[] { 9, 8, 7, 6, 5 });
-    }
-
-    static void Test(int[] input)
-    {
-        int[] copy = new int[input.Length];
-        Array.Copy(input, copy, input.Length);
-
-        BubbleSort(copy);
-
-        if (IsSorted(copy))
+        List<Employee> employees = new List<Employee>
         {
-            Console.WriteLine($"✅: QuickSort([{string.Join(",", input)}]) -> [{string.Join(",", copy)}]");
-        }
-        else
+            new Employee("Alice", "IT", new DateTime(2020, 5, 1), false),
+            new Employee("Bob", "HR", new DateTime(2018, 3, 10), true),
+            new Employee("Charlie", "IT", new DateTime(2019, 7, 15), true),
+            new Employee("David", "HR", new DateTime(2021, 1, 20), false),
+            new Employee("Eve", "Finance", new DateTime(2017, 9, 5), true)
+        };
+
+        // Custom Sort
+        employees.Sort((a, b) =>
         {
-            Console.WriteLine($"❌: Test Failed");
-            Console.WriteLine($"   Input : [{string.Join(",", input)}]");
-            Console.WriteLine($"   Output: [{string.Join(",", copy)}]");
+            // 1️⃣ Managers first
+            if (a.IsManager != b.IsManager)
+                return b.IsManager.CompareTo(a.IsManager);
+
+            // 3️⃣ Hire date (oldest first)
+            return a.HireDate.CompareTo(b.HireDate);
+        });
+        // Eve | Finance | 9/5/2017 | Manager: True
+        // Bob | HR | 3/10/2018 | Manager: True
+        // Charlie | IT | 7/15/2019 | Manager: True
+        // Alice | IT | 5/1/2020 | Manager: False
+        // David | HR | 1/20/2021 | Manager: False
+
+        foreach (var e in employees)
+        {
+            Console.WriteLine($"{e.Name} | {e.Department} | {e.HireDate:d} | Manager: {e.IsManager}");
         }
     }
+}
 
-    static bool IsSorted(int[] arr)
+class Employee
+{
+    public string Name { get; }
+    public string Department { get; }
+    public DateTime HireDate { get; }
+    public bool IsManager { get; }
+
+    public Employee(string name, string dept, DateTime hireDate, bool isManager)
     {
-        for (int i = 1; i < arr.Length; i++)
-        {
-            if (arr[i] < arr[i - 1])
-                return false;
-        }
-        return true;
-    }
-
-    static void BubbleSort(int[] arr)
-    {
-        int len = arr.Length;
-        for (int i=0; i < len; i++)
-        {
-            bool swapped = false;
-            for (int j=1; j < len - i; j++)
-            {
-                if (arr[j] < arr[j-1])
-                {
-                    int temp = arr[j];
-                    arr[j] = arr[j-1];
-                    arr[j-1] = temp;
-                    swapped = true;
-                }
-            }
-
-            if (!swapped)
-            {
-                break;
-            }
-        }
+        Name = name;
+        Department = dept;
+        HireDate = hireDate;
+        IsManager = isManager;
     }
 }
