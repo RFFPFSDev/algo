@@ -1007,7 +1007,7 @@ class Program
 
 ### Sorting
 
-#### Quick Sort
+#### Bubble Sort
 
 ```cs
 class Program
@@ -1025,6 +1025,7 @@ class Program
         Test(new int[] { });
         Test(new int[] { 10, -1, 2, -10, 5, 0 });
         Test(new int[] { 4, 4, 4, 4 });
+        Test(new int[] { 9, 8, 7, 6, 5 });
     }
 
     static void Test(int[] input)
@@ -1032,50 +1033,52 @@ class Program
         int[] copy = new int[input.Length];
         Array.Copy(input, copy, input.Length);
 
-        QuickSort(copy, 0, copy.Length - 1);
+        BubbleSort(copy);
 
-        Console.WriteLine($"Input : [{string.Join(",", input)}]");
-        Console.WriteLine($"Sorted: [{string.Join(",", copy)}]");
-        Console.WriteLine();
-    }
-
-    static void QuickSort(int[] arr, int left, int right)
-    {
-        if (left >= right)
+        if (IsSorted(copy))
         {
-            return;
+            Console.WriteLine($"✅: QuickSort([{string.Join(",", input)}]) -> [{string.Join(",", copy)}]");
         }
-
-        int pivotIndex = Partition(arr, left, right);
-
-        QuickSort(arr, left, pivotIndex - 1);
-        QuickSort(arr, pivotIndex + 1, right);
+        else
+        {
+            Console.WriteLine($"❌: Test Failed");
+            Console.WriteLine($"   Input : [{string.Join(",", input)}]");
+            Console.WriteLine($"   Output: [{string.Join(",", copy)}]");
+        }
     }
 
-    static int Partition(int[] arr, int left, int right)
+    static bool IsSorted(int[] arr)
     {
-        int pivot = arr[right]; // choosing last element as pivot
-        int i = left - 1;
-
-        for (int j = left; j < right; j++)
+        for (int i = 1; i < arr.Length; i++)
         {
-            if (arr[j] <= pivot)
+            if (arr[i] < arr[i - 1])
+                return false;
+        }
+        return true;
+    }
+
+    static void BubbleSort(int[] arr)
+    {
+        int len = arr.Length;
+        for (int i=0; i < len; i++)
+        {
+            bool swapped = false;
+            for (int j=1; j < len - i; j++)
             {
-                i++;
-                Swap(arr, i, j);
+                if (arr[j] < arr[j-1])
+                {
+                    int temp = arr[j];
+                    arr[j] = arr[j-1];
+                    arr[j-1] = temp;
+                    swapped = true;
+                }
+            }
+
+            if (!swapped)
+            {
+                break;
             }
         }
-
-        Swap(arr, i + 1, right);
-
-        return i + 1;
-    }
-
-    static void Swap(int[] arr, int i, int j)
-    {
-        int temp = arr[i];
-        arr[i] = arr[j];
-        arr[j] = temp;
     }
 }
 ```
