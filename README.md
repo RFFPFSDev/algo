@@ -49,6 +49,28 @@ Math.Round(4.5) = 4
 Math.Round(4.6) = 5
 ```
 
+### Sort List
+
+Sort(a, b) => result. You must return:
+
+* Less than zero → a comes before b
+* Zero → they are equal (move to next rule or keep order)
+* Greater than zero → b comes before a
+
+CompareTo functions:
+
+Compares this instance to a parameter and returns an integer that indicates their relationship to one another.
+
+int bool.CompareTo(bool value) -> Return Value – Condition
+* Less than zero – This instance is false and value is true.
+* Zero – This instance and value are equal (either both are true or both are false).
+* Greater than zero – This instance is true and value is false.
+
+int DateTime.CompareTo(DateTime value) -> Value – Description
+* Less than zero – This instance is earlier than value.
+* Zero – This instance is the same as value.
+* Greater than zero – This instance is later than value.
+
 ### string
 
 * string is immutable — once created, it cannot be changed.
@@ -1104,14 +1126,15 @@ class Program
             new Employee("Eve", "Finance", new DateTime(2017, 9, 5), true)
         };
 
-        // Custom Sort
         employees.Sort((a, b) =>
         {
-            // 1️⃣ Managers first
+            // A=>next. B=> before
+            // Console.WriteLine($"a={a.Name},b={b.Name}");
             if (a.IsManager != b.IsManager)
+            {
                 return b.IsManager.CompareTo(a.IsManager);
-
-            // 3️⃣ Hire date (oldest first)
+            }
+            
             return a.HireDate.CompareTo(b.HireDate);
         });
         // Eve | Finance | 9/5/2017 | Manager: True

@@ -11,14 +11,15 @@
             new Employee("Eve", "Finance", new DateTime(2017, 9, 5), true)
         };
 
-        // Custom Sort
         employees.Sort((a, b) =>
         {
-            // 1️⃣ Managers first
+            // A=>next. B=> before
+            // Console.WriteLine($"a={a.Name},b={b.Name}");
             if (a.IsManager != b.IsManager)
+            {
                 return b.IsManager.CompareTo(a.IsManager);
-
-            // 3️⃣ Hire date (oldest first)
+            }
+            
             return a.HireDate.CompareTo(b.HireDate);
         });
         // Eve | Finance | 9/5/2017 | Manager: True
