@@ -200,7 +200,7 @@ After clearing:
 
 ### List<T>
 
-* Ordered, index-based dynamic array
+* Index-based dynamic array
 * Allows duplicates
 * Fast access by index
 
@@ -290,6 +290,40 @@ class Program
         Console.WriteLine();
     }
 }
+```
+
+```
+Initial list:
+10 20 30 40 50 60 
+
+Element at index 2: 30
+
+After updating index 1:
+10 25 30 40 50 60 
+
+After inserting 15 at index 2:
+10 25 15 30 40 50 60 
+
+After removing 40:
+10 25 15 30 50 60 
+
+After removing at index 0:
+25 15 30 50 60 
+
+25 exists in the list
+Index of 50: 3
+
+Total items: 5
+
+After sorting:
+15 25 30 50 60
+
+After reversing:
+60 50 30 25 15
+
+Max: 60, Min: 15, Sum: 180
+
+After clearing list, count: 0
 ```
 
 ### HashSet<T>
