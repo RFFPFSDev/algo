@@ -200,9 +200,8 @@ After clearing:
 
 ### List<T>
 
-* Index-based dynamic array
+* Dynamic array
 * Allows duplicates
-* Fast access by index
 
 ```cs
 class Program
@@ -328,9 +327,8 @@ After clearing list, count: 0
 
 ### HashSet<T>
 
+* Dynamic array
 * Stores unique elements
-* No guaranteed order
-* Very fast lookup
 
 ```cs
 class Program
@@ -344,6 +342,9 @@ class Program
         numbers.Add(10);
         numbers.Add(20);
         numbers.Add(30);
+
+        // Access by index
+        Console.WriteLine("Element at index 2: " + numbers.ElementAt(2));
 
         // Adding a duplicate has no effect
         bool added = numbers.Add(20); // false
@@ -401,6 +402,32 @@ class Program
         Console.WriteLine();
     }
 }
+```
+
+```
+Element at index 2: 30
+Trying to add 20 again: False
+
+Initial HashSet:
+10 20 30 
+
+30 exists in the HashSet
+
+After removing 10:
+20 30 
+
+Total items: 2
+
+Union of numbers and otherNumbers:
+40 20 30 50 
+
+Intersection of numbers and otherNumbers:
+20
+
+Difference of numbers and otherNumbers:
+30
+
+After clearing HashSet, count: 0
 ```
 
 ### Dictionary
