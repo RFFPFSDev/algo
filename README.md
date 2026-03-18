@@ -433,8 +433,6 @@ After clearing HashSet, count: 0
 ### Dictionary
 
 * Key–value pairs
-* Fast lookups by key
-* Keys must be unique
 
 ```cs
 class Program
@@ -518,6 +516,33 @@ class Program
         }
     }
 }
+```
+
+```
+Initial students:
+Alice : 85
+Bob : 90
+Charlie : 78
+
+Bob's grade: 90
+Alice exists in dictionary.
+A student has grade 90.
+David not found.
+
+Total students: 2
+
+Student Names:
+Alice
+Bob
+
+Student Grades:
+95
+90
+
+Highest Grade: 95
+
+Dictionary cleared.
+Count after clear: 0
 ```
 
 ## Algorithms

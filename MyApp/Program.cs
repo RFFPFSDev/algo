@@ -2,70 +2,80 @@
 {
     static void Main()
     {
-        // Create a HashSet of integers
-        HashSet<int> numbers = new HashSet<int>();
+        // Create a dictionary
+        Dictionary<string, int> students = new Dictionary<string, int>();
 
         // Add items
-        numbers.Add(10);
-        numbers.Add(20);
-        numbers.Add(30);
+        students.Add("Alice", 85);
+        students.Add("Bob", 90);
+        students["Charlie"] = 78;   // Alternative way to add
 
-        // Access by index
-        Console.WriteLine("Element at index 2: " + numbers.ElementAt(2));
+        Console.WriteLine("Initial students:");
+        PrintDictionary(students);
 
-        // Adding a duplicate has no effect
-        bool added = numbers.Add(20); // false
-        Console.WriteLine($"Trying to add 20 again: {added}");
+        // Access values
+        Console.WriteLine("\nBob's grade: " + students["Bob"]);
 
-        Console.WriteLine("\nInitial HashSet:");
-        PrintHashSet(numbers);
-
-        // Check if a value exists
-        if (numbers.Contains(30))
+        // Check if key exists
+        if (students.ContainsKey("Alice"))
         {
-            Console.WriteLine("\n30 exists in the HashSet");
+            Console.WriteLine("Alice exists in dictionary.");
         }
 
-        // Remove an item
-        numbers.Remove(10);
-        Console.WriteLine("\nAfter removing 10:");
-        PrintHashSet(numbers);
+        // Check if value exists
+        if (students.ContainsValue(90))
+        {
+            Console.WriteLine("A student has grade 90.");
+        }
+
+        // Update value
+        students["Alice"] = 95;
+
+        // TryGetValue (safe way)
+        if (students.TryGetValue("David", out int grade))
+        {
+            Console.WriteLine("David's grade: " + grade);
+        }
+        else
+        {
+            Console.WriteLine("David not found.");
+        }
+
+        // Remove item
+        students.Remove("Charlie");
 
         // Count
-        Console.WriteLine("\nTotal items: " + numbers.Count);
+        Console.WriteLine("\nTotal students: " + students.Count);
 
-        // Union, Intersection, Difference with another HashSet
-        HashSet<int> otherNumbers = new HashSet<int>() { 20, 40, 50 };
+        //  Loop through Keys only
+        Console.WriteLine("\nStudent Names:");
+        foreach (string name in students.Keys)
+        {
+            Console.WriteLine(name);
+        }
 
-        // Union
-        HashSet<int> union = new HashSet<int>(numbers);
-        union.UnionWith(otherNumbers);
-        Console.WriteLine("\nUnion of numbers and otherNumbers:");
-        PrintHashSet(union);
+        // Loop through Values only
+        Console.WriteLine("\nStudent Grades:");
+        foreach (int value in students.Values)
+        {
+            Console.WriteLine(value);
+        }
 
-        // Intersection
-        HashSet<int> intersection = new HashSet<int>(numbers);
-        intersection.IntersectWith(otherNumbers);
-        Console.WriteLine("\nIntersection of numbers and otherNumbers:");
-        PrintHashSet(intersection);
+        // LINQ example (Highest grade)
+        int maxGrade = students.Values.Max();
+        Console.WriteLine("\nHighest Grade: " + maxGrade);
 
-        // Difference (numbers - otherNumbers)
-        HashSet<int> difference = new HashSet<int>(numbers);
-        difference.ExceptWith(otherNumbers);
-        Console.WriteLine("\nDifference of numbers and otherNumbers:");
-        PrintHashSet(difference);
-
-        // Clear HashSet
-        numbers.Clear();
-        Console.WriteLine("\nAfter clearing HashSet, count: " + numbers.Count);
+        // Clear dictionary
+        students.Clear();
+        Console.WriteLine("\nDictionary cleared.");
+        Console.WriteLine("Count after clear: " + students.Count);
     }
 
-    static void PrintHashSet(HashSet<int> set)
+    static void PrintDictionary(Dictionary<string, int> dict)
     {
-        foreach (int num in set)
+        foreach (var item in dict)
         {
-            Console.Write(num + " ");
+            Console.WriteLine(item.Key + " : " + item.Value);
         }
-        Console.WriteLine();
     }
 }
