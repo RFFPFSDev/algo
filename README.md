@@ -49,7 +49,7 @@ Math.Round(4.5) = 4
 Math.Round(4.6) = 5
 ```
 
-### Sort List
+### List.Sort()
 
 Sort(a, b) => result. You must return:
 
@@ -88,10 +88,10 @@ name = "Bob"; // Creating a new string "Bob". Making name reference the new obje
 ```cs
 using System.Text;
 
-StringBuilder sb = new StringBuilder("Hello");
+var sb = new StringBuilder("Hello");
 sb[0] = 'B';        // ✅ Allowed
+char firstLetter = sb[0];
 sb.Append(" World");
-
 string result = sb.ToString();
 ```
 
