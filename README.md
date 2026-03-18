@@ -124,8 +124,8 @@ class Program
         Console.WriteLine("Array length: " + numbers.Length);
 
         // Check if value exists
-        bool contains20 = numbers.Contains(15);
-        Console.WriteLine("\nContains 15? " + contains20);
+        bool contains15 = numbers.Contains(15);
+        Console.WriteLine("\nContains 15? " + contains15);
 
         // Find index of value
         int index = Array.IndexOf(numbers, 15);
@@ -170,6 +170,32 @@ class Program
         Console.WriteLine();
     }
 }
+```
+
+```
+Initial array:
+10 5 8 0 15 
+
+Element at index 2: 8
+Array length: 5
+
+Contains 15? True
+Index of 15: 4
+
+After sorting:
+0 5 8 10 15 
+
+After reversing:
+15 10 8 5 0 
+
+Max value: 15
+Min value: 0
+
+After resizing:
+15 10 8 5 0 99 100
+
+After clearing:
+0 0 0 0 0 0 0
 ```
 
 ### List<T>
