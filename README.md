@@ -690,7 +690,6 @@ class Program
         Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
         Test(new int[] { -4, -3, -2, -1 }, 3, -6);        // subarray [-3,-2,-1]
         Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
-        Test(new int[] { 1, 2 }, 3, -1);                  // k > array length, invalid
     }
 
     static void Test(int[] arr, int k, int expected)
@@ -708,30 +707,18 @@ class Program
 
     static int MaxSumSubarray(int[] arr, int k)
     {
-        if (k > arr.Length)
-        {
-            return -1;
-        }
-
-        if (k == 1)
-        {
-           return arr.Max();
-        }
-
         int sum = 0;
-        for (int i=0; i < k; i++)
-        {
-            sum+=arr[i];
-        }
-        int maxSum = sum;
+        int maxSum = 0;
 
-        for (int a = 0; a < arr.Length - k; a++)
+        for (int i = 0; i < k; i++) sum+=arr[i];
+        maxSum = sum;
+
+        var shifts = arr.Length - k;
+
+        for (int i=0; i < shifts; i++)
         {
-            sum+=arr[a + k]-arr[a];
-            if (sum > maxSum)
-            {
-                maxSum = sum;
-            }
+            sum += -arr[i] + arr[i+k];
+            maxSum = Math.Max(maxSum,sum);
         }
 
         return maxSum;

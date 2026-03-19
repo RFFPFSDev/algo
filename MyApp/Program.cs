@@ -1,81 +1,49 @@
 ﻿class Program
 {
-    static void Main()
+    static void Main(string[] args)
     {
-        // Create a dictionary
-        Dictionary<string, int> students = new Dictionary<string, int>();
+        RunTests();
+    }
 
-        // Add items
-        students.Add("Alice", 85);
-        students.Add("Bob", 90);
-        students["Charlie"] = 78;   // Alternative way to add
+    static void RunTests()
+    {
+        Test(new int[] { 2, 1, 2, 1, 3, 1, 2, 1 }, 3, 6); // subarray [3,1,2]
+        Test(new int[] { 2, 1, 5, 1, 3, 2 }, 3, 9);       // subarray [5,1,3]
+        Test(new int[] { 1, 2, 3, 4, 5 }, 2, 9);          // subarray [4,5]
+        Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
+        Test(new int[] { -4, -3, -2, -1 }, 3, -6);        // subarray [-3,-2,-1]
+        Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
+    }
 
-        Console.WriteLine("Initial students:");
-        PrintDictionary(students);
-
-        // Access values
-        Console.WriteLine("\nBob's grade: " + students["Bob"]);
-
-        // Check if key exists
-        if (students.ContainsKey("Alice"))
+    static void Test(int[] arr, int k, int expected)
+    {
+        var result = MaxSumSubarray(arr, k);
+        if (result == expected)
         {
-            Console.WriteLine("Alice exists in dictionary.");
-        }
-
-        // Check if value exists
-        if (students.ContainsValue(90))
-        {
-            Console.WriteLine("A student has grade 90.");
-        }
-
-        // Update value
-        students["Alice"] = 95;
-
-        // TryGetValue (safe way)
-        if (students.TryGetValue("David", out int grade))
-        {
-            Console.WriteLine("David's grade: " + grade);
+            Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
         }
         else
         {
-            Console.WriteLine("David not found.");
+            Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
         }
-
-        // Remove item
-        students.Remove("Charlie");
-
-        // Count
-        Console.WriteLine("\nTotal students: " + students.Count);
-
-        //  Loop through Keys only
-        Console.WriteLine("\nStudent Names:");
-        foreach (string name in students.Keys)
-        {
-            Console.WriteLine(name);
-        }
-
-        // Loop through Values only
-        Console.WriteLine("\nStudent Grades:");
-        foreach (int value in students.Values)
-        {
-            Console.WriteLine(value);
-        }
-
-        // LINQ example (Highest grade)
-        int maxGrade = students.Values.Max();
-        Console.WriteLine("\nHighest Grade: " + maxGrade);
-
-        // Clear dictionary
-        students.Clear();
-        Console.WriteLine("\nDictionary cleared.");
-        Console.WriteLine("Count after clear: " + students.Count);
     }
 
-    static void PrintDictionary(Dictionary<string, int> dict)
+    static int MaxSumSubarray(int[] arr, int k)
     {
-        foreach (var item in dict)
+        int sum = 0;
+        int maxSum = 0;
+
+        for (int i = 0; i < k; i++) sum+=arr[i];
+        maxSum = sum;
+
+        var shifts = arr.Length - k;
+
+        for (int i=0; i < shifts; i++)
         {
-            Console.WriteLine(item.Key + " : " + item.Value);
+            sum += -arr[i] + arr[i+k];
+            maxSum = Math.Max(maxSum,sum);
         }
+
+        return maxSum;
     }
 }
