@@ -7,71 +7,50 @@
 
     static void RunTests()
     {
-        Test("cde", "abc", 4);              // delete c,d from s1 and a,b from s2
-        Test("showman", "woman", 2);        // delete s,h
-        Test("aabbcc", "abc", 3);           // remove extra duplicates
-        Test("abcc", "abc", 1);             // remove extra duplicates
-        Test("abc", "abc", 0);              // already anagrams
-        Test("", "abc", 3);                 // delete all from s2
-        Test("abc", "", 3);                 // delete all from s1
-        Test("xxyyzz", "zzxxyy", 0);        // same chars, different order
+        Test(new int[] { 2, 7, 11, 15 }, 9, true);     // 2 + 7
+        Test(new int[] { 15, 11, 7, 2 }, 9, true);     // 2 + 7
+        Test(new int[] { 3, 2, 4 }, 6, true);          // 2 + 4
+        Test(new int[] { 3, 3 }, 6, true);             // 3 + 3
+        Test(new int[] { 1, 2, 3, 4 }, 8, false);      // no pair
+        Test(new int[] { -1, -2, -3, -4 }, -6, true);  // -2 + -4
+        Test(new int[] { 0, 4, 3, 0 }, 0, true);       // 0 + 0
+        Test(new int[] { 5 }, 5, false);               // single element
+        Test(new int[] { }, 0, false);                 // empty array
     }
 
-    static void Test(string s1, string s2, int expected)
+    static void Test(int[] nums, int target, bool expected)
     {
-        var result = makingAnagrams(s1, s2);
+        var result = HasPairWithSum(nums, target);
 
         if (result == expected)
         {
-            Console.WriteLine($"✅: \"{s1}\", \"{s2}\" -> {result}");
+            Console.WriteLine($"✅: [{string.Join(", ", nums)}], target={target} -> {result}");
         }
         else
         {
-            Console.WriteLine($"❌: \"{s1}\", \"{s2}\" | Expected: {expected}, Got: {result}");
+            Console.WriteLine($"❌: [{string.Join(", ", nums)}], target={target} | Expected: {expected}, Got: {result}");
         }
     }
 
-    public class Tup
+    public static bool HasPairWithSum(int[] nums, int target)
     {
-        public int f1 { get; set; }
-        public int f2 { get; set; }
-    }
-
-    public static int makingAnagrams(string s1, string s2)
-    {
-        var countF = new Dictionary<char, Tup>();
-
-        foreach (char c in s1)
+        int len = nums.Length;
+        if (nums.Length < 2)
         {
-            if (countF.ContainsKey(c))
+            return false;
+        }
+
+        for (int i=0; i < len; i++)
+        {
+            for (int j=i+1; j < len; j++)
             {
-                countF[c].f1 += 1;
-            }
-            else
-            {
-                countF.Add(c, new Tup() { f1 = 1, f2 = 0 });
+                if (nums[i] + nums[j] == target)
+                {
+                    return true;
+                }
             }
         }
 
-        foreach (char c in s2)
-        {
-            if (countF.ContainsKey(c))
-            {
-                countF[c].f2 += 1;
-            }
-            else
-            {
-                countF.Add(c, new Tup() { f1 = 0, f2 = 1 });
-            }
-        }
-
-        var result = 0;
-
-        foreach (var cf in countF)
-        {
-            result += Math.Abs(cf.Value.f1 - cf.Value.f2);
-        }
-
-        return result;
+        return false;
     }
 }
