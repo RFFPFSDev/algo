@@ -7,43 +7,71 @@
 
     static void RunTests()
     {
-        Test(new int[] { 2, 1, 2, 1, 3, 1, 2, 1 }, 3, 6); // subarray [3,1,2]
-        Test(new int[] { 2, 1, 5, 1, 3, 2 }, 3, 9);       // subarray [5,1,3]
-        Test(new int[] { 1, 2, 3, 4, 5 }, 2, 9);          // subarray [4,5]
-        Test(new int[] { -1, -2, -3, -4 }, 2, -3);        // subarray [-1,-2]
-        Test(new int[] { -4, -3, -2, -1 }, 3, -6);        // subarray [-3,-2,-1]
-        Test(new int[] { 5, 2, -1, 0, 3 }, 1, 5);         // single element window
+        Test("cde", "abc", 4);              // delete c,d from s1 and a,b from s2
+        Test("showman", "woman", 2);        // delete s,h
+        Test("aabbcc", "abc", 3);           // remove extra duplicates
+        Test("abcc", "abc", 1);             // remove extra duplicates
+        Test("abc", "abc", 0);              // already anagrams
+        Test("", "abc", 3);                 // delete all from s2
+        Test("abc", "", 3);                 // delete all from s1
+        Test("xxyyzz", "zzxxyy", 0);        // same chars, different order
     }
 
-    static void Test(int[] arr, int k, int expected)
+    static void Test(string s1, string s2, int expected)
     {
-        var result = MaxSumSubarray(arr, k);
+        var result = makingAnagrams(s1, s2);
+
         if (result == expected)
         {
-            Console.WriteLine($"✅: [{string.Join(",", arr)}], k={k} -> {result}");
+            Console.WriteLine($"✅: \"{s1}\", \"{s2}\" -> {result}");
         }
         else
         {
-            Console.WriteLine($"❌: [{string.Join(",", arr)}], k={k} | Expected: {expected}, Got: {result}");
+            Console.WriteLine($"❌: \"{s1}\", \"{s2}\" | Expected: {expected}, Got: {result}");
         }
     }
 
-    static int MaxSumSubarray(int[] arr, int k)
+    public class Tup
     {
-        int sum = 0;
-        int maxSum = 0;
+        public int f1 { get; set; }
+        public int f2 { get; set; }
+    }
 
-        for (int i = 0; i < k; i++) sum+=arr[i];
-        maxSum = sum;
+    public static int makingAnagrams(string s1, string s2)
+    {
+        var countF = new Dictionary<char, Tup>();
 
-        var shifts = arr.Length - k;
-
-        for (int i=0; i < shifts; i++)
+        foreach (char c in s1)
         {
-            sum += -arr[i] + arr[i+k];
-            maxSum = Math.Max(maxSum,sum);
+            if (countF.ContainsKey(c))
+            {
+                countF[c].f1 += 1;
+            }
+            else
+            {
+                countF.Add(c, new Tup() { f1 = 1, f2 = 0 });
+            }
         }
 
-        return maxSum;
+        foreach (char c in s2)
+        {
+            if (countF.ContainsKey(c))
+            {
+                countF[c].f2 += 1;
+            }
+            else
+            {
+                countF.Add(c, new Tup() { f1 = 0, f2 = 1 });
+            }
+        }
+
+        var result = 0;
+
+        foreach (var cf in countF)
+        {
+            result += Math.Abs(cf.Value.f1 - cf.Value.f2);
+        }
+
+        return result;
     }
 }
