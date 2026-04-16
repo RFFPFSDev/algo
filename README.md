@@ -1255,7 +1255,7 @@ class Program
 
         for (int i=1; i < len; i++)
         {
-            if (result.FirstOrDefault() == s[i])
+            if (result.Count > 0 && result.Peek() == s[i])
             {
                 result.Pop();
                 continue;
@@ -1333,7 +1333,7 @@ class Program
 
         for (int i = 1; i < len; i++)
         {
-            if (stack.Count > 0 && opposites.ContainsKey(s[i]) && opposites[s[i]] == stack.First())
+            if (stack.Count > 0 && opposites.ContainsKey(s[i]) && opposites[s[i]] == stack.Peek())
             {
                 stack.Pop();
                 continue;

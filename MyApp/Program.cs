@@ -7,20 +7,21 @@
 
     static void RunTests()
     {
-        Test("{[()]}", "YES");
-        Test("{[(])}", "NO");
-        Test("{{[[(())]]}}", "YES");
-        Test("()", "YES");
-        Test(")(", "NO");
-        Test("([)]", "NO");
-        Test("", "YES");
-        Test("[", "NO");
-        Test("]", "NO");
+        Test("abbaca", "ca");
+        Test("azxxzy", "ay");
+        Test("aabbcc", "");
+        Test("abc", "abc");
+        Test("aaaa", "");
+        Test("abba", "");
+        Test("aabccbadd", "a");
+        Test("", "");
+        Test("a", "a");
+        Test("aaabccddd", "abd");
     }
 
     static void Test(string input, string expected)
     {
-        var result = IsBalanced(input);
+        var result = RemoveAdjacentDuplicates(input);
 
         if (result == expected)
         {
@@ -32,34 +33,36 @@
         }
     }
 
-    static string IsBalanced(string s)
+    static string RemoveAdjacentDuplicates(string s)
     {
         int len = s.Length;
-
-        if (len == 0)
+        if (s.Length <= 1)
         {
-            return "YES";
+            return s;
         }
 
-        var opposites = new Dictionary<char,char>();
-        opposites.Add('}','{');
-        opposites.Add(']','[');
-        opposites.Add(')','(');
+        var result = new Stack<char>();
+        result.Push(s[0]);
 
-        var stack = new Stack<char>();
-        stack.Push(s[0]);
-
-        for (int i = 1; i < len; i++)
+        for (int i=1; i < len; i++)
         {
-            if (stack.Count > 0 && opposites.ContainsKey(s[i]) && opposites[s[i]] == stack.First())
+            if (result.Count > 0 && result.Peek() == s[i])
             {
-                stack.Pop();
+                result.Pop();
                 continue;
             }
 
-            stack.Push(s[i]);
+            result.Push(s[i]);
         }
 
-        return stack.Count == 0 ? "YES" : "NO";
+        var text = string.Empty;
+        var reslen = result.Count;
+
+        for (int i=0; i< reslen; i++)
+        {
+            text = result.Pop() + text;
+        }
+
+        return text.ToString();
     }
 }
