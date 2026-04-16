@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-class Program
+﻿class Program
 {
     static void Main(string[] args)
     {
@@ -9,39 +7,62 @@ class Program
 
     static void RunTests()
     {
-        TestStaircase(0);
-        TestStaircase(1);
-        TestStaircase(2);
-        TestStaircase(4);
-        TestStaircase(6);
-        TestStaircase(10);
+        Test("abbaca", "ca");
+        Test("azxxzy", "ay");
+        Test("aabbcc", "");
+        Test("abc", "abc");
+        Test("aaaa", "");
+        Test("abba", "");
+        Test("aabccbadd", "a");
+        Test("", "");
+        Test("a", "a");
+        Test("aaabccddd", "abd");
     }
 
-    static void TestStaircase(int n)
+    static void Test(string input, string expected)
     {
-        Console.WriteLine($"\nStaircase n={n}");
-        staircase(n);
+        var result = RemoveAdjacentDuplicates(input);
+
+        if (result == expected)
+        {
+            Console.WriteLine($"✅: \"{input}\" -> \"{result}\"");
+        }
+        else
+        {
+            Console.WriteLine($"❌: \"{input}\" | Expected: \"{expected}\", Got: \"{result}\"");
+        }
     }
 
-    public static void staircase(int n)
+    static string RemoveAdjacentDuplicates(string s)
     {
-        if (n <= 0)
+        int len = s.Length;
+        if (s.Length <= 1)
         {
-            return;
+            return s;
         }
 
-        var text = new StringBuilder();
+        var result = new Stack<char>();
+        result.Push(s[0]);
 
-        // initialize with spaces
-        for (int i = 0; i < n; i++)
+        for (int i=1; i < len; i++)
         {
-            text.Append(' ');
+            if (result.FirstOrDefault() == s[i])
+            {
+                result.Pop();
+                continue;
+            }
+
+            result.Push(s[i]);
         }
 
-        for (int i = n - 1; i >= 0; i--)
+        var text = string.Empty;
+        var reslen = result.Count;
+
+        for (int i=0; i< reslen; i++)
         {
-            text[i] = '#';
-            Console.WriteLine(text.ToString());
+            text = result.Pop() + text;
         }
+
+        return text.ToString();
     }
 }
