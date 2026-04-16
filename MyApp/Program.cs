@@ -7,21 +7,20 @@
 
     static void RunTests()
     {
-        Test("abbaca", "ca");
-        Test("azxxzy", "ay");
-        Test("aabbcc", "");
-        Test("abc", "abc");
-        Test("aaaa", "");
-        Test("abba", "");
-        Test("aabccbadd", "a");
-        Test("", "");
-        Test("a", "a");
-        Test("aaabccddd", "abd");
+        Test("{[()]}", "YES");
+        Test("{[(])}", "NO");
+        Test("{{[[(())]]}}", "YES");
+        Test("()", "YES");
+        Test(")(", "NO");
+        Test("([)]", "NO");
+        Test("", "YES");
+        Test("[", "NO");
+        Test("]", "NO");
     }
 
     static void Test(string input, string expected)
     {
-        var result = RemoveAdjacentDuplicates(input);
+        var result = IsBalanced(input);
 
         if (result == expected)
         {
@@ -33,36 +32,34 @@
         }
     }
 
-    static string RemoveAdjacentDuplicates(string s)
+    static string IsBalanced(string s)
     {
         int len = s.Length;
-        if (s.Length <= 1)
+
+        if (len == 0)
         {
-            return s;
+            return "YES";
         }
 
-        var result = new Stack<char>();
-        result.Push(s[0]);
+        var opposites = new Dictionary<char,char>();
+        opposites.Add('}','{');
+        opposites.Add(']','[');
+        opposites.Add(')','(');
 
-        for (int i=1; i < len; i++)
+        var stack = new Stack<char>();
+        stack.Push(s[0]);
+
+        for (int i = 1; i < len; i++)
         {
-            if (result.FirstOrDefault() == s[i])
+            if (stack.Count > 0 && opposites.ContainsKey(s[i]) && opposites[s[i]] == stack.First())
             {
-                result.Pop();
+                stack.Pop();
                 continue;
             }
 
-            result.Push(s[i]);
+            stack.Push(s[i]);
         }
 
-        var text = string.Empty;
-        var reslen = result.Count;
-
-        for (int i=0; i< reslen; i++)
-        {
-            text = result.Pop() + text;
-        }
-
-        return text.ToString();
+        return stack.Count == 0 ? "YES" : "NO";
     }
 }
